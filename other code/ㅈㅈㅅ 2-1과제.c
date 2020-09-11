@@ -4,7 +4,7 @@
 struct student
 {
 	char name[SIZE];
-	char number[SIZE]; //학점
+	char number[SIZE]; //학점d
 	int grade[2];
 	double grade_aver;
 	int rank;
