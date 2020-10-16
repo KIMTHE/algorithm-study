@@ -11,6 +11,7 @@ typedef struct edge														//edge 구조체
 {
 	int vnum1;
 	int vnum2;
+}edge;
 
 void stack_push(int*, int*, int, int);
 char stack_pop(int*, int*);
