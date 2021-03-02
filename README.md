@@ -1,4 +1,13 @@
-# algorithm-study
-codeup이나 백준에서 풀이한 알고리즘문제코드
+# problem-solve
+`백준에서 풀이한 알고리즘 문제코드`
+- language : python
 
-I want to be good at coding
+ ___
+ **<solved.ac>**
+
+|date|level|
+|--|--|
+| 2021-03-02|silver4|
+|-|-|
+
+ 
