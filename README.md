@@ -1,6 +1,6 @@
 # problem-solve
 `백준에서 풀이한 알고리즘 문제코드`
-- language : python
+- language : python.
 
  ___
  **<solved.ac>**
