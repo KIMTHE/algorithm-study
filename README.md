@@ -8,6 +8,7 @@
  **<solved.ac>**
 
 |date|level_KIMTHE|level_simgyureol|
+|--|--|--|
 |2021-03-02|silver4|-|
 |2021-04-01|-|-|
 |2021-05-01|-|-|
