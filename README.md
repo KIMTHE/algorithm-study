@@ -1,8 +1,9 @@
 # problem-solve
 `백준에서 풀이한 알고리즘 문제코드`
-- 해결하는데 쉬우면 기록하지 않는다..
+- 풀이하는데 시간이 소비되었다면 기록한다.
 - language : python
 - 1 day, 2 solve
+- 1 month, 2 level up!
 
  ___
  **<solved.ac>**
