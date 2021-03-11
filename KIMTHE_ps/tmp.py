@@ -4,71 +4,29 @@ from collections import deque
 from itertools import combinations, product
 input = lambda : sys.stdin.readline().rstrip()
 
-sdok = [list(map(int, input().split())) for _ in range(9)]
+n = int(input())
+nums = [int(input()) for _ in range(n)]
 
-row = [set(i) for i in sdok]
-col = []
+inter = []
 
-for i in range(9):
-    tmp = []
-    for j in range(9):
-        tmp.append(sdok[j][i])
-    col.append(set(tmp))
+for i in range(1,n) : inter.append(nums[i]-nums[i-1])
 
-blocks = [[] for _ in range(3)]   
+def uclid(a,b):
+    if a>b: a,b = b,a
+    tmp = b%a
 
-for i in range(3):
-    for j in range(3):
-        tmp = []
+    if tmp == 0: return a
 
-        for k in range(i*3,i*3+3):
-            for l in range(j*3,j*3+3):
-                tmp.append(sdok[k][l])
-
-        blocks[i].append(set(tmp))
-blanks = []
-
-for i in range(9):
-    for j in range(9):
-        if sdok[i][j] == 0:
-            tmp = (i,j)
-            blanks.append(tmp)
-
-max = len(blanks)
-
-def dfs(idx) :
-    global sdok,blanks,row,col,blocks
-    global max
-
-    if idx == max : return True 
-
-    x,y = blanks[idx]
-
-    for i in range(1,10):
-        if i in row[x]: continue
-        if i in col[y]: continue
-        if  i in blocks[x//3][y//3] : continue
-
-        sdok[x][y] = i
-        row[x].add(i)
-        col[y].add(i)
-        blocks[x//3][y//3].add(i)
-
-
-        if dfs(idx+1) : return True
-        else :
-            sdok[x][y] = 0
-            row[x].remove(i)
-            col[y].remove(i)
-            blocks[x//3][y//3].remove(i)
-
+    else : return(uclid(tmp,a))
     
-    return False
-    
+tmp = inter[0]
+for i in inter:
+    tmp = uclid(tmp,i)
 
-dfs(0)
+result = 0
 
-for i in range(9):
-    for j in range(9):
-        print(sdok[i][j], end = ' ')
-    print()
+for i in inter:
+    result += (i // tmp - 1)
+
+
+print(result)
