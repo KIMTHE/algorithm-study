@@ -1,7 +1,7 @@
 import sys
 input = lambda : sys.stdin.readline().rstrip()
 
-def search(i):
+def search(i): #이진 탐색 기법으로 해결
     low=0
     high=len(A)-1
 
