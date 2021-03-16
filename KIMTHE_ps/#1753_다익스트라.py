@@ -18,6 +18,7 @@ for _ in range(E):
 
 # heap을 이용한 다익스트라 알고리즘
 heapq.heappush(q,(0,start))
+distance[start] = 0
 
 while len(q)>0:
     now_dist, now_v = heapq.heappop(q)
@@ -25,12 +26,12 @@ while len(q)>0:
     if distance[now_v] < now_dist :
         continue
 
-    distance[now_v] = now_dist 
-
     for e in graph[now_v]:
         tmp_dist = now_dist+e[1]
-        heapq.heappush(q,(tmp_dist,e[0]))
-        
+
+        if distance[e[0]] > tmp_dist :
+            heapq.heappush(q,(tmp_dist,e[0]))
+            distance[e[0]] = tmp_dist 
 
 #출력
 for i in range(1,V+1):
