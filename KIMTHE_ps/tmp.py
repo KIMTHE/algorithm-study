@@ -4,47 +4,46 @@ from itertools import combinations, product #조합,순열
 input = lambda : sys.stdin.readline().rstrip() #입력속도빠르게
 INF = int(1e9) #10억 
 
-n,m,v = map(int,input().split())
+n = int(input())
 
-E = [[] for _ in range(n+1)] 
+graph = [[] for _ in range(n)]
+visit = [[False]*n for _ in range(n)]
 
-for _ in range(m):
-    a,b = map(int,input().split())
-    E[b].append(a)
-    E[a].append(b)
-
-for i in range(1,n+1):
-    E[i].sort()
-
-def dfs(E,visit,v):
-    visit[v] = True
-
-    print(v,end = ' ')
-
-    for i in E[v]:
-        if visit[i] == False:
-            dfs(E,visit,i)
+for i in range(n):
+    tmp = input()
+    graph[i] = [int(num) for num in tmp]
 
 
-def bfs(E,visit,v):
-    q = deque()
-    q.append(v)
-    visit[v] = True
-    while len(q) > 0:
+def dfs(now):
+    global visit,graph,n
 
-        now = q.popleft()
-        print(now,end = ' ')
-        
+    row,col = now
+    visit[row][col] = True
+    cnt = 1
 
-        for i in E[now]:
-            if visit[i] == False:
-                q.append(i)
-                visit[i] = True
+    if col != 0 and graph[row][col-1] == 1 and visit[row][col-1] == False :
+        cnt += dfs((row,col-1))
+    if col != n-1 and graph[row][col+1] == 1 and visit[row][col+1] == False :
+        cnt += dfs((row,col+1))
+    if row != 0 and graph[row-1][col] == 1 and visit[row-1][col] == False :
+        cnt += dfs((row-1,col))
+    if row != n-1 and graph[row+1][col] == 1 and visit[row+1][col] == False :
+        cnt += dfs((row+1,col))
+
+    return cnt
 
 
+result = []
+cnt = 0
 
-visit = [False] * (n+1)
-dfs(E,visit,v)
-print()
-visit = [False] * (n+1)
-bfs(E,visit,v)
+for i in range(n):
+    for j in range(n):
+        if graph[i][j] == 0 : continue
+        if visit[i][j] == True : continue
+
+        result.append(dfs((i,j)))
+        cnt += 1
+
+result.sort()
+print(cnt)
+for i in result : print(i)
