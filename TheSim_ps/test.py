@@ -1,5 +1,5 @@
-a=[]
+N=input()
 
-if not a:
-    print(123)
+cut=list(N)
 
+print(N[2])
