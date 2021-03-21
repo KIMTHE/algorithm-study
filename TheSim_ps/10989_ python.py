@@ -6,7 +6,7 @@ N=int(input())
 c=[0]*10001 #메모리 초과로 입력수가 10000까지 이므로 10001까지
 for i in range(N):
     b=int(input())
-    c[b]+=1
+    c[b]+=1 #중복된 값은 인덱스 값을 증가
     
 for i in range(10001):      
     if c[i]!=0:

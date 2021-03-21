@@ -1,4 +1,4 @@
-"""import sys
+"""import sys #버블정렬로 해결
 input = lambda : sys.stdin.readline().rstrip()
 
 
@@ -18,7 +18,7 @@ for i in range(N):
 for i in range(N):
     print(num[i])"""
 
-import sys
+import sys #퀵정렬로 해결
 input = lambda : sys.stdin.readline().rstrip()
 
 def quick(start,end):
