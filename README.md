@@ -51,4 +51,17 @@ python의 유클리드 호제법에 해당하는 함수가 존재한다.
             array[tmp] = False # 소수의 배수는 소수가 아님
             tmp += i
 
- 
+### DP)
+
+
+- 최장 증가 부분 수열(LIS, Longest Increasing Subsequence)
+
+    index=i까지 최장증가부분수열의 길이을 구함, 시간복잡도 O(n^2)
+
+        for i in range(n):
+            DP[i] = 1  
+        
+            for j in range(i):
+                if list[j] < list[i]:
+                    DP[i] = max(DP[i],DP[j]+1)
+    
