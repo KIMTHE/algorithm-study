@@ -24,7 +24,7 @@ for i in range(1,n): #i번쨰 동전까지 사용
     for j in range(1,k+1): #1원부터 k원까지 
         if j<coin[i] : DP[j] = pre_DP[j]
         else:
-            DP[j] = pre_DP[j]+DP[j-coin[i]]
+            DP[j] = pre_DP[j]+pre_DP[j-coin[i]]
 
 
 print(DP[-1])
