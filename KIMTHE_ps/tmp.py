@@ -4,30 +4,20 @@ from itertools import combinations, product #조합,순열
 input = lambda : sys.stdin.readline().rstrip() #입력속도빠르게
 INF = int(1e9) #10억 
 
-n,k = map(int,input().split())
-coin = [int(input()) for _ in range(n)]
-result = 0
+n = int(input())
 
-coin.sort()
+cost = [0]
+cost += list(map(int,input().split()))
 
-DP = [0]*(k+1)
-pre_DP = DP
+DP = [0]*(n+1)
 
-for i in range(1,k+1):
-    if i>=coin[0] and i % coin[0] == 0:
-        DP[i] = 1
+for i in range(1,n+1): #i개 카드팩까지 구매할때
+    for j in range(1,n+1): #j개 카드구매 최대값
+        if i > j : continue
 
-#i번째 동전까지 사용 = i-1번째 동전까지사용+a
-for i in range(1,n): #i번쨰 동전까지 사용
-    pre_DP = DP
-    pre_DP[0] = 1
-    for j in range(1,k+1): #1원부터 k원까지 
-        if j<coin[i] : DP[j] = pre_DP[j]
-        else:
-            DP[j] = pre_DP[j]+DP[j-coin[i]]
+        if j % i == 0:
+            DP[j] = max(DP[j],(j//i)*cost[i])
 
+        DP[j] = max(DP[j],DP[j-i]+cost[i])
 
 print(DP[-1])
-
-
-
