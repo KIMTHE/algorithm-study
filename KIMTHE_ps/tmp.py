@@ -1,35 +1,22 @@
 import sys, math, heapq #수학연산의 math, 우선순위큐에 사용되는 heapq
 from collections import deque #queue를 구현하는 덱
 from itertools import combinations, product #조합,순열
+from bisect import bisect_left,bisect_right #이진탐색
 input = lambda : sys.stdin.readline().rstrip() #입력속도빠르게
-INF = int(1e9) #10억 
+INF = math.inf
 
-n,m = map(int,input().split())
-tree = list(map(int,input().split()))
-max_tree = max(tree)
-min_cut = max_tree-m
-if min_cut <0 : min_cut = -1
+n,c = map(int,input().split())
+house = [int(input()) for _ in range(n)]
+router = [0]*c
 
-max_cut = min_cut
+house.sort()
+router[0] = house[0]
 
-def b_s(start,end):
-    global max_cut
+def b_s(start,end,idx):
+    if start>end : return
 
-    mid = (start+end)//2
 
-    if start > end : return
-
-    tmp = 0
-    for t in tree:
-        if t > mid : tmp+= t-mid
-
-    if tmp>=m:
-        if mid > max_cut : max_cut = mid
-        b_s(mid+1,end)
-
-    else:
-        b_s(start,mid-1)
-
-    
-b_s(min_cut+1,max_tree)
-print(max_cut)
+interval = n//c
+start = 1
+end = 1+interval
+for i in range(1,c):
