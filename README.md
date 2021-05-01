@@ -13,8 +13,8 @@
 |date|level_KIMTHE|level_simgyureol|
 |--|--|--|
 |2021-03-01|silver4|bronze3|
-|2021-04-01|silver1|-|
-|2021-05-01|gold5|-|
+|2021-04-01|silver1|bronze1|
+|2021-05-01|gold5|silver5|
 |2021-06-01|-|-|
 |2021-07-01|-|-|
 
