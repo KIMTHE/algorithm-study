@@ -1,10 +1,28 @@
-n = int(input())
-p = []
-for i in range(n):
-    p.append(list(map(int, input().split())))
-print(len(p))
-for i in range(1, len(p)):
-    p[i][0] = min(p[i - 1][1], p[i - 1][2]) + p[i][0]
-    p[i][1] = min(p[i - 1][0], p[i - 1][2]) + p[i][1]
-    p[i][2] = min(p[i - 1][0], p[i - 1][1]) + p[i][2]
-print(min(p[n - 1][0], p[n - 1][1], p[n - 1][2]))
+import sys
+
+def Goldbach():
+    check = [False, False] + [True] * 1000000
+    
+    for i in range(2, 1001):
+        if check[i] == True:
+            for j in range(i + i, 1000001, i):
+                check[j] = False
+
+    while True:
+        n = int(sys.stdin.readline())
+
+        if n == 0:
+            break
+
+        A = 0
+        B = n
+        for _ in range(1000000):
+            if check[A] and check[B]:
+                print(f"{n} = {A} + {B}")
+                break
+            A += 1
+            B -= 1
+        else:
+            print("Goldbach's conjecture is wrong.")
+
+Goldbach()
