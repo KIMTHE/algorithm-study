@@ -5,35 +5,22 @@ input = lambda : sys.stdin.readline().rstrip()
 N=list(map(int,input().split(' '))) #정수의 개수N과 정수 S
 integer = list(map(int,input().split(' '))) #정수 값 입력
 
-count=0 #부분 수열 갯수
-result=0
 
-if N[1]==0:
-    a=1
+count=0 # 부분수열 갯수
+sum=0 #더한 값
 
-def dfs(start,depth):
-    
-    global result
-    global integer
-    global N
-    global a
+def dfs(i,sum):
     global count
-    S=N[1]
 
-    if a==1:
-     a=0
-     count-=1
-    else:
-        if result==S:
-         count+=1
-         return
+    if i>=N[0]:
+        return
 
-    for i in range(start,len(integer)):
-        result+=integer[i]
-        dfs(i+1,depth+1)
+    sum+=integer[i]
+    if N[1]==sum:
+        count+=1
+    dfs(i+1,sum-integer[i]) #값을 포함하지 않은 값
+    dfs(i+1,sum)
 
-   
-    
 dfs(0,0)
 
 print(count)
