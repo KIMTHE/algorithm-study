@@ -1,3 +1,4 @@
+#딕셔너리 이용
 import sys
 input = lambda : sys.stdin.readline().rstrip()
 
