@@ -1,12 +1,11 @@
 import sys
 input = lambda : sys.stdin.readline().rstrip()
-
+sys.setrecursionlimit(10**5)
 N=int(input())
 
-sum=0
-d=[0]*1001
+dic={}
+
 def F(N):
-    global d
     
     if N==0:
         return 0
@@ -14,9 +13,10 @@ def F(N):
         return 1
     if N==2:
         return 1
-    if d[N]!=0:
-        return d[N]
-    d[N] = F(N-1)+F(N-2)
-    return d[N]
+    if N in dic:
+        return dic[N]
 
-print(F(N))
+    dic[N] = F(N-1)+F(N-2)
+    return dic[N]
+
+print(F(N%1000000)%1000000)
