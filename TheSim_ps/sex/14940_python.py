@@ -35,33 +35,20 @@ while q:
         x=a+xx[i] #하
         y=b+yy[i]
         
-        if (0<=x<N[0])and (0<=y<N[1]): 
+        if (0<=x<N[1])and (0<=y<N[0]): 
             if visit[y][x]==0 and m[y][x]==1:
-                
                 visit[y][x]=1 #방문 표시
                 q.append(x)
                 q.append(y)
-                if out[b][a]==0:
-                    visit[y][x]=0
-                    
                 out[y][x]=out[b][a]+1
 
-            elif a!=index[0] and b!=index[1] and (m[b][a]==0 or out[b][a]==-1):
-                if visit[y][x]==0 and out[y][x]==-1:
-                    q.append(x)
-                    q.append(y)
-                    out[y][x]=-1
 for i in range(N[0]):
     for j in range(N[1]):   
         if m[i][j]==0:
             out[i][j]=0
             
-
 for i in range(N[0]):
     for j in range(N[1]):
-        #if i!=index[0]+0 and j!=index[1]+1 and i!=index[0]+1 and j!=index[1]+0 and i!=index[0]+0 and j!=index[1]-1 and i!=index[0]-1 and j!=index[1]+0 and out[i][j]==1:    
-         #   print(-1,end=' ')
-        #else:
-            print(out[i][j],end=' ')
+        print(out[i][j],end=' ')
     
     print()
