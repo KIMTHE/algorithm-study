@@ -3,8 +3,10 @@
 ### `백준에서 풀이한 알고리즘 문제코드`
 - 풀이하는데 어느정도 시간이 소비되었다면 기록한다.
 - language : python
-- 1 day, 1-2 solve!
-- 1 month, 2 level up!
+- 1 day, 1 solve!
+- 1 month, 1 level up!
+
+- [알고리즘 자료정리 링크 클릭](https://docs.google.com/document/d/1rKqgJJ8dncenY-cXzKlQ1RZSf4gjo-_wVMjV9rjE_iw/edit?usp=sharing, "구글 문서")
 
  ___
 
