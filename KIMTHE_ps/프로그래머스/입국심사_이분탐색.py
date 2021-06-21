@@ -18,4 +18,4 @@ def solution(n, times):
             if mid<answer: answer = mid
             right = mid-1
             
-    return answer
+    return answer 
