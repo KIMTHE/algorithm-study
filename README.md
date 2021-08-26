@@ -6,7 +6,7 @@
 - 1 day, 1 solve!
 - 1 month, 1 level up!
 
-- [알고리즘 자료정리 링크 클릭](https://docs.google.com/document/d/1rKqgJJ8dncenY-cXzKlQ1RZSf4gjo-_wVMjV9rjE_iw/edit?usp=sharing, "구글 문서")
+- [알고리즘 자료정리 링크](https://docs.google.com/document/d/1rKqgJJ8dncenY-cXzKlQ1RZSf4gjo-_wVMjV9rjE_iw/edit?usp=sharing, "구글 문서")
 
  ___
 
@@ -18,7 +18,7 @@
 |2021-04-01|silver1|bronze1|
 |2021-05-01|gold5|silver5|
 |2021-06-01|gold4|silver1|
-|2021-07-01|-|gold5|
+|2021-07-01|gold4|gold5|
 
 
 ___
