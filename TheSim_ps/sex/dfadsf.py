@@ -1,25 +1,33 @@
-# [1,2,3,4,5,6,7,8,9,10]의 powerset중 원소의 합이 10인 부분집합을 모두 출력하라
-def subset(k,sum_num):
-    global cnt
-    cnt +=1
-    if sum_num > 10:    # 가지치기
-        return
-    if k == n:          # 목표도달
-        if sum_num == 10:
-            for i in range(n):
-                if visited[i]:
-                    print(arr[i], end=" ")
-            print()
-        return
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+import itertools
 
-    else:
-        visited[k] = 1
-        subset(k+1,sum_num+arr[k])
-        visited[k] = 0
-        subset(k+1,sum_num)
-arr = [1,2,3,4,5,6,7,8,9,10]
-n = len(arr)
-cnt = 0
-visited = [0]* n
-subset(0,0)
+N=int(input())
+soccer=[]
+for i in range(N):
+    soccer.append(list(map(int,input().split())))
 
+num=[0]*N
+for i in range(N):
+    num[i]=str(i)    
+a=list(map(''.join, itertools.combinations(num,N//2))) # 2개의 원소로 수열 만들기
+
+answer=100000000
+for k in range(len(a)//2):
+    v1=0 #a값
+    v2=0 #b값   
+    
+    for i in (a[k]):
+        for j in (a[k]):
+            v1+=soccer[int(i)-1][int(j)-1]
+           
+    
+    b=list(set(num)-set(a[k])) #나머지 수
+    
+    for i in b:
+        for j in b:
+            v2+=soccer[int(i)-1][int(j)-1]
+            
+    answer=min(answer,abs(v1-v2))
+    
+print(answer)
