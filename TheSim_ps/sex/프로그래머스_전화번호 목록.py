@@ -1,28 +1,39 @@
 
-a=5
-b=5
-def solution(N, number):
-    answer = 0
-    value=[set() for x in range(8)]
+def solution(a):
+    answer = []
+    
+    for i in a:
+        count=0
+        left=0
+        right=len(i)-1
+        i=list(i)
 
-    for i in range(1,9):
-        value[i-1].add(int(str(N)*i))
-    
-    for i in range(0,8):
-        for j in range(i):
-            for a in value[j]:
-                for b in value[i-j-1]:
-                    value[i].add(a+b)
-                    value[i].add(a-b)
-                    value[i].add(a*b)
-                    if b!=0:
-                        value[i].add(a//b)
-    
-        if number in value[i]:
-            return i+1
+        while True:
+            if left>right:
+                answer.append(True)
+                break
+            if count==1:
+                answer.append(False)
+                break
 
-    return -1
+            value=i[left:right+1].count("a")  
+
+            
+            if i[left]=="a" or  i[right]=="a":
+                if i[left]=="a":
+                    left+=1
+                elif i[right]=="a":
+                    right-=1
+
+            elif "a" in i[left:right+1] and "a" not in i[left:value+left] and "a" not in i[right-value+1:right+1]:
+                    left+=value
+                    right-=value
+            else:
+                count=1
     
-print(solution(a,b))
+    return answer
+    
+
+print(solution(["abab","bbaa","bababa","bbbabababbbaa"]))
 
 
