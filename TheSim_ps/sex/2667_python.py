@@ -1,29 +1,30 @@
 import sys
 input = lambda : sys.stdin.readline().rstrip()
 
-def find(i,j,count):
+def find(i,j):
+    global count
     if house[i][j]==1 and visit[i][j]==0:
         visit[i][j]=1
         count+=1
         if i-1>=0 and visit[i-1][j]==0:
             if house[i-1][j]==1:
                 
-                count=find(i-1,j,count)
+                find(i-1,j)
 
         if i+1<N and visit[i+1][j]==0:
             if house[i+1][j]==1:
                 
-                count=find(i+1,j,count)
+                find(i+1,j)
 
         if j-1>=0 and visit[i][j-1]==0:
             if house[i][j-1]==1:
                 
-                count=find(i,j-1,count)
+                find(i,j-1)
 
         if j+1<N and visit[i][j+1]==0:
             if house[i][j+1]==1:
                 
-                count=find(i,j+1,count)
+                find(i,j+1)
     return count
 
 N=int(input())
@@ -38,7 +39,7 @@ value=[]
 for i in range(N):
     for j in range(N):
         count=0
-        a=find(i,j,count)
+        a=find(i,j)
         if a!=0:
             value.append(a)
 
