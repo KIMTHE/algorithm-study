@@ -1,0 +1,48 @@
+import sys
+from collections import deque
+input = lambda : sys.stdin.readline().rstrip()
+
+N,M,H=input().split()
+N=int(N) #가로줄
+M=int(M) #세로줄
+H=int(H) #윗줄
+
+tomato=[]
+for i in range(M*H):
+    tomato.append(list(map(int,input().split())))
+
+
+move=[[1,0],[0,1],[-1,0],[0,-1],[M,0],[-M,0]] #아래, 오른쪽,왼쪽,위
+
+q=deque([])
+for i in range(M*H):
+    for j in range(N):
+        if tomato[i][j]==1:
+            q.append([i,j,0])
+
+while q:
+    i,j,time=q.popleft()
+
+    for a,b in move:
+        c=a
+        a+=i
+        b+=j
+        if a<M*H and 0<=a and 0<=b and b<N and tomato[a][b]==0:
+         if c==1 or c==-1:
+          if ((a//M)==(i//M)):
+            tomato[a][b]=1
+            q.append([a,b,time+1])
+         else:
+            tomato[a][b]=1
+            q.append([a,b,time+1])
+
+
+for i in range(M*H):
+        if 0 in tomato[i]: #다 못익은 상태
+            print(-1)
+            break
+else:
+    if time==0:
+        print(0)
+    else:
+        print(time)
