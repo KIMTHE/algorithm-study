@@ -1,128 +1,54 @@
 import sys
 input = lambda : sys.stdin.readline().rstrip()
+from collections import deque
 
 def find():
-    count=[[[0]*M for i in range(N)]for a in range(2)] #3차원 리스트 거리
-    q=[0,0,0]
-    count[0][0][0]+=1
-    count[1][0][0]+=1
-
-    while q:
-        i=q.pop(0) #현재 위치 세로
-        j=q.pop(0) #가로
-        over=q.pop(0) #벽을 부셨을때 1 안부시면 0
-
-        if i+1<N: #아래
-            if over==0 and load[i+1][j]==1 and count[1][i+1][j]==0: 
-                count[1][i+1][j]=count[0][i][j]+1
-                q.append(i+1)
-                q.append(j)
-                q.append(1)
-
-            elif load[i+1][j]==0:
-                if over==1 and count[1][i+1][j]==0:
-                    if count[1][i+1][j]!=0:
-                        count[1][i+1][j]=min(count[1][i][j]+1,count[1][i+1][j])
-                    else:
-                        count[1][i+1][j]=count[1][i][j]+1
-                    q.append(i+1)
-                    q.append(j)
-                    q.append(1)
-                elif count[0][i+1][j]==0 and over==0:
-                    count[0][i+1][j]=count[0][i][j]+1
-                    q.append(i+1)
-                    q.append(j)
-                    q.append(0)    
-
-        if j+1<M: #오른
-            if over==0 and load[i][j+1]==1 and count[1][i][j+1]==0:
-                count[1][i][j+1]=count[0][i][j]+1
-                q.append(i)
-                q.append(j+1)
-                q.append(1)
-
-            elif load[i][j+1]==0:
-                if over==1 and count[1][i][j+1]==0:
-                    if count[1][i][j+1]!=0:
-                        count[1][i][j+1]=min(count[1][i][j]+1,count[1][i][j+1])
-                    else:
-                        count[1][i][j+1]=count[1][i][j]+1
-                    q.append(i)
-                    q.append(j+1)
-                    q.append(1)
-                elif count[0][i][j+1]==0 and over==0:
-                    count[0][i][j+1]=count[0][i][j]+1
-                    q.append(i)
-                    q.append(j+1)
-                    q.append(0)   
-
-       
-        if i>0: #위
-            if over==0 and load[i-1][j]==1 and count[1][i-1][j]==0:
-                count[1][i-1][j]=count[0][i][j]+1
-                q.append(i-1)
-                q.append(j)
-                q.append(1)
-
-            elif load[i-1][j]==0:
-                if over==1 and count[1][i-1][j]==0:
-                    if count[1][i-1][j]!=0: 
-                        count[1][i-1][j]=min(count[1][i][j]+1,count[1][i-1][j])
-                    else:
-                        count[1][i-1][j]=count[1][i][j]+1
-                    q.append(i-1)
-                    q.append(j)
-                    q.append(1)
-                elif count[0][i-1][j]==0 and over==0:
-                    count[0][i-1][j]=count[0][i][j]+1
-                    q.append(i-1)
-                    q.append(j)
-                    q.append(0)    
-
-
-        
-        if j>0: #왼
-            if over==0 and load[i][j-1]==1 and count[1][i][j-1]==0:
-                count[1][i][j-1]=count[0][i][j]+1
-                q.append(i)
-                q.append(j-1)
-                q.append(1)
-
-            elif load[i][j-1]==0:
-                if over==1 and count[1][i][j-1]==0:
-                    if count[1][i][j-1]!=0:
-                        count[1][i][j-1]=min(count[1][i][j]+1,count[1][i][j-1])
-                    else:
-                        count[1][i][j-1]=count[1][i][j]+1
-                    q.append(i)
-                    q.append(j-1)
-                    q.append(1)
-                elif count[0][i][j-1]==0 and over==0:
-                    count[0][i][j-1]=count[0][i][j]+1
-                    q.append(i)
-                    q.append(j-1)
-                    q.append(0)  
+    direct = [[0,1],[1,0],[0,-1],[-1,0]] # 오,아,왼,위
+    q=deque()
+    q.append([0,0,0]) #세로, 가로, 벽뚫었는지 여부 0이면 안뚫음 1이면 뚫음
     
-    if count[0][N-1][M-1]==0 and count[1][N-1][M-1]==0:
-        print(-1)
-    elif count[0][N-1][M-1]==0 or count[1][N-1][M-1]==0:
-        if count[0][N-1][M-1]==0:
-            print(count[1][N-1][M-1])
-        elif count[1][N-1][M-1]==0:
-            print(count[0][N-1][M-1])
-    else:
-        print(min(count[0][N-1][M-1],count[1][N-1][M-1]))
+    
+    while q:
+           
+        n,m,check=q.popleft() 
+
+        for i,j in direct: #4방향 이동
+            if n+i>=0 and n+i<N and m+j>=0 and m+j<M : #맵을 넘는지 확인
+
+                if load[n+i][m+j]==0 and visit[check][n+i][m+j]==0: #다음 값에 이동 가능하고 방문하지 않았을 경우
+                    visit[check][n+i][m+j]=visit[check][n][m]+1 #현재값 +1
+                    q.append([n+i,m+j,check]) # q에 추가
+                elif load[n+i][m+j]==1 and check==0: #벽을 만났을 경우 아직 벽을 안뚫었을 때
+                    visit[1][n+i][m+j]=visit[check][n][m]+1 #벽 뚫은 값 1에 현재 값 +1
+                    q.append([n+i,m+j,1]) #q에 추가
+                
+    return load
     
 N,M = (input().split())
 N=int(N) #세로
 M=int(M) #가로
 
-load=[]
+load=[] #맵
 
-for i in range(N):
+for i in range(N): #맵 입력
     a=list(map(int,input()))
     load.append(a)
 
-find()
+visit=[[[0]*M for i in range(N)] for j in range(2)] #방문 확인과 거리 확인
+visit[0][0][0]=1 #시작 거리는 1, 0이면 벽 안뚫음 1이면 벽 둟음 , N, M
+
+find() # 함수 실행
+
+if N==1 and M==1: #1칸짜리면 거리는 1
+    print(1)
+elif visit[0][N-1][M-1]==0 and visit[1][N-1][M-1]==0: #마지막 값이 0이면 도착불가 -1
+    print(-1)
+else:
+    if visit[0][N-1][M-1]!=0 and visit[1][N-1][M-1]!=0: #둘중 최소거리 출력
+        print(min(visit[0][N-1][M-1],visit[1][N-1][M-1]))
+    elif visit[0][N-1][M-1]==0: # 한쪽이 0일 경우 도착불가이므로 다른쪽 출력
+        print(visit[1][N-1][M-1])
+    else:
+        print(visit[0][N-1][M-1])
 
 
