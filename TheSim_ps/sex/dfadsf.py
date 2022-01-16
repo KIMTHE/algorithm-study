@@ -1,33 +1,25 @@
 import sys
-from collections import deque
 input = sys.stdin.readline
-dx = [1, -1, 0, 0]
-dy = [0, 0, -1, 1]
-def bfs():
-    q = deque()
-    q.append([0, 0, 1])
-    visit = [[[0] * 2 for i in range(m)] for i in range(n)]
-    print(visit)
-    visit[0][0][1] = 1
-    while q:
-        a, b, w = q.popleft()
-        if a == n - 1 and b == m - 1:
-            print(visit)
-            return visit[a][b][w]
-        for i in range(4):
-            x = a + dx[i]
-            y = b + dy[i]
-            if 0 <= x < n and 0 <= y < m:
-                if s[x][y] == 1 and w == 1:
-                    visit[x][y][0] = visit[a][b][1] + 1
-                    q.append([x, y, 0])
-                elif s[x][y] == 0 and visit[x][y][w] == 0:
-                    visit[x][y][w] = visit[a][b][w] + 1
-                    q.append([x, y, w])
-    print(visit)
-    return -1
-n, m = map(int, input().split())
-s = []
-for i in range(n):
-    s.append(list(map(int, list(input().strip()))))
-print(bfs())
+
+def find(i): #i는 열 j는 행을 의미
+    if i==N: #마지막 열까지 Q가 다 찼으므로 경우의 수 +1
+        global count
+        count+=1
+        return
+
+    else:
+        for j in range(N): #모든 행을 반복
+            if not (a[j] or b[i+j] or c[i-j+N-1]): #세로줄이나 대각선에 값이 없으면 Q를 둘 수 있다
+                a[j] = b[i+j] =  c[i-j+N-1] = True #Q를 뒀으니 있다는 True 표시
+                find(i+1) # 다음 열에 Q 위치 찾기
+                a[j] = b[i+j] =  c[i-j+N-1] = False # 원하는 값이 없으므로 Q를 둔 표시를 지운다
+    return    
+
+
+N=int(input()) #체스 판의 크기
+
+visit=[0]*N #Q를 두는 위치 저장 같은 열에는 둘 수 없으므로 행만 생각한다
+count=0 # 경우의 수
+a,b,c = [False]*N,[False]*(2*N-1),[False]*(2*N-1) #미리 세로줄, 대각선의 배열을 만들어둠
+find(0)
+print(count)
