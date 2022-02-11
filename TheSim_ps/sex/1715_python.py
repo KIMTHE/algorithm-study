@@ -1,6 +1,6 @@
 import sys
 input = lambda : sys.stdin.readline().rstrip()
-import heapq #우선순위큐 
+import heapq #힙큐 
 
 N=int(input()) #카드 묶음 갯수 입력
 card=[] #카드묶음 카드 수
