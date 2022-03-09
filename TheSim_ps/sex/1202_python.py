@@ -12,7 +12,7 @@ for i in range(N): #보석 값 입력
 heapq.heapify(jewel)
 
 for i in range(K): # 가방 값 입력
-    backpack.append(int(input()))
+    backpack.append(int(input())) #ㄴㄴ
 
 backpack.sort() #오름차순으로 가방 정렬
 
