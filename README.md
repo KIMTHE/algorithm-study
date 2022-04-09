@@ -3,7 +3,7 @@
 ### `백준에서 풀이한 알고리즘 문제코드`
 - 풀이하는데 어느정도 시간이 소비되었다면 기록한다.
 - language : 각자 알아서
-- try 1 day, 1 solve!
+- try 3 day, 1 solve!
 
 - [알고리즘 자료정리 링크](https://docs.google.com/document/d/1rKqgJJ8dncenY-cXzKlQ1RZSf4gjo-_wVMjV9rjE_iw/edit?usp=sharing, "구글 문서")
 
@@ -81,8 +81,8 @@
         </tr>
         <tr>
             <td>2022-04-01</td>
-            <td></td>
-            <td></td>
+            <td>gold3</td>
+            <td>gold3</td>
         </tr>    
         <tr>
             <td>2022-05-01</td>
