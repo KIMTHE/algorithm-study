@@ -1,28 +1,32 @@
-def solution(players, power, k):
+import re
+
+def solution(expression):
     answer = 0
     
-    #공격력이 높거나 같으면 승리
-    # 고의로 패배 가능
-    #dp=[] 이전값+k, 이전값+연승값 len(i)
-    #dp[i]=max(dp[i-1]+k,dp[i-1]+(i+1))
-
-    dp=[0]*(len(players)+1)
-    dp[0]=power
-    win=0
-    for i in range(len(players)):
-        win+=1
-        if players[i]<=dp[i]:
-            if k*win < (((win)*(win+1))//2): #연승이 패배하는것보다 크면
-                dp[i+1]=max(dp[0]+(k*win),dp[0]+(((win)*(win+1))//2)) #전부다 지거나 승리하거나
-            
-        else: #필패
-            dp[i+1]=max(dp[i]+k,dp[i+1])
-            win=0
-            dp[0]=dp[i+1]
+    value=re.split('([-|+|*])',expression)
+        
+    dir=[['-','+','*'],['-','*','+'],['+','-','*'],['+','*','-'],['*','+','-'],['*','-','+']]
     
-    print(dp)
+    for i in dir:
+        value_temp=value[:]
+        
+        for j in i:
+            count=0 #뺀 숫자
+            for k in range(1,len(value_temp)):
+                k-=count
+                if value_temp[k]==j:
+                    temp=eval(value_temp[k-1]+value_temp[k]+value_temp[k+1])
+                    temp=str(temp)
+                    
+                    value_temp[k+1]=temp
+                    value_temp.pop(k)
+                    value_temp.pop(k-1)
+                    
+                    count+=2
 
-    answer=dp[-1]
+                 
+        answer=max(answer,abs(int(value_temp[0])))
+    
     return answer
 
-solution([10, 11, 15, 14, 16, 18, 19, 20],10,2)
+solution("100-200*300-500+20")
