@@ -12,7 +12,7 @@ for _ in range(T):
     for i in range(1,K+1): #1부터 n까지 누적합
         s[i]=s[i-1]+chapter[i-1]
     
-    for i in range(2,K+1): #부분 파일의 길이
+    for i in range(2,K+1): #부분 파일의 길이, 몇개를 합쳤는지의 갯수
         for j in range(1,K-i+2): #시작점
             min_value=0 #부분 파일 중에서 최솟값
             for z in range(i-1):
