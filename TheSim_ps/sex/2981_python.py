@@ -26,6 +26,15 @@ tmp=answer[0]
 for i in range(1,len(answer)): #A-B, B-C... 의 값 최대공약수 구하기
     tmp=gcd(tmp,answer[i])
 
-for i in range(2,tmp+1): #최대공약수의 약수 출력
-    if tmp%i==0:
-        print(i,end=' ')
+# for i in range(2,tmp+1): #최대공약수의 약수 출력
+#     if tmp%i==0:
+#         print(i,end=' ')
+
+result=set() #6*6같은 경우 2개가 저장될 수 있으므로 중복제거를 위해 set으로 저장
+for i in range(2,int(tmp**0.5)+1):
+	if tmp % i ==0:
+		result.add(i)
+		result.add(tmp//i)
+result.add(tmp)
+print(*sorted(list(result)))
+		
