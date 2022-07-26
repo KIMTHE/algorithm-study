@@ -1,6 +1,15 @@
-a = 100
-result = 0
-for i in range(1,3):
-   result = a >> i
-   result = result + 1
-print(result)
+N, M = map(int, input().split())
+a = list(map(int, input().split())) + [0]
+cnt = [0] * M
+
+for i in range(N):
+    a[i] += a[i - 1]
+    cnt[a[i] % M] += 1
+
+ans = cnt[0]
+
+print(cnt)
+for v in cnt:
+    ans += v * (v - 1) // 2
+
+print(ans)
