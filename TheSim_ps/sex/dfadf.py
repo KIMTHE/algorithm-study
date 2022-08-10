@@ -1,15 +1,8 @@
-N, M = map(int, input().split())
-a = list(map(int, input().split())) + [0]
-cnt = [0] * M
+def fibo(n):
+    p=1000000007
+    sqrt_5 = 5 ** (1/2)
+    ans = 1 / sqrt_5 * ( (((1 + sqrt_5) / 2) ** n)  - (((1 - sqrt_5) / 2) ** n))
+    return int(ans)
 
-for i in range(N):
-    a[i] += a[i - 1]
-    cnt[a[i] % M] += 1
 
-ans = cnt[0]
-
-print(cnt)
-for v in cnt:
-    ans += v * (v - 1) // 2
-
-print(ans)
+print(fibo(1000))
