@@ -1,44 +1,24 @@
-def solution(n, horizontal):
-    answer = [[]]
-    
-    clean=[[0]*n for i in range(n)]
-    
-    yeol=[[0,1],[-1,0]] #수평
-    hang=[[1,0],[0,-1]] #수직
+def dfs(load,M,visit):
+        for i in range(len(load)):
+            if visit[i]==0 and load[i]<=M:
+                visit[i]=1
+                M-=load[i]
+        return visit
 
-    count=1
-    clean[0][0]=count
-    q=[0,0] #현재 위치
-    for i in range(2,n+1):
-        if horizontal: #수평
-            count+=1
-            clean[q[0]+0][q[1]+1]=count #처음에 오른쪽로 한칸
-            q=[q[0]+0,q[1]+1]
-            for a,b in hang:
-                while True: #오른쪽 위로 움직이기
-                    if q[0]+a==i or q[1]+b==i or q[0]+a<0 or q[1]+b<0:
-                        horizontal=False
-                        break
-                    if 0<=q[0]+a<n and 0<= q[1]+b<n:
-                        count+=1
-                        clean[q[0]+a][q[1]+b]=count
-                        q=[q[0]+a,q[1]+b]
+def solution(M, load):
+    answer = 0
+    load.sort()
+    visit=[0]*len(load)
+    if load[-1]>M:
+        answer=-1
+    else:    
+        for i in range(len(load)-1,-1,-1):
+            if visit[i]==0:
+                visit[i]=1
 
-        else:
-            count+=1
-            clean[q[0]+1][q[1]+0]=count #처음에 아래로 한칸
-            q=[q[0]+1,q[1]+0]
-            for a,b in yeol:
-
-                while True: #오른쪽 위로 움직이기
-                    if q[0]+a==i or q[1]+b==i or q[0]+a<0 or q[1]+b<0:
-                        horizontal=True
-                        break
-                    if 0<=q[0]+a<n and 0<= q[1]+b<n:
-                        count+=1
-                        clean[q[0]+a][q[1]+b]=count
-                        q=[q[0]+a,q[1]+b]
-
+                dfs(load,M-load[i],visit)
+                answer+=1
     return answer
 
-print(solution(4,True))
+
+print(solution(20, [16, 15, 9, 17, 1, 3]))
