@@ -1,24 +1,25 @@
-def dfs(load,M,visit):
-        for i in range(len(load)):
-            if visit[i]==0 and load[i]<=M:
-                visit[i]=1
-                M-=load[i]
-        return visit
+import sys
+input = lambda : sys.stdin.readline().rstrip()
 
-def solution(M, load):
-    answer = 0
-    load.sort()
-    visit=[0]*len(load)
-    if load[-1]>M:
-        answer=-1
-    else:    
-        for i in range(len(load)-1,-1,-1):
-            if visit[i]==0:
-                visit[i]=1
+N=int(input())
 
-                dfs(load,M-load[i],visit)
-                answer+=1
-    return answer
+num=[]
+for i in range(N):
+    num.append(list(map(int,input().split())))
 
+if N==1:
+    print(0)
+else:
+    value=[[0]*N for i in range(N)]
 
-print(solution(20, [16, 15, 9, 17, 1, 3]))
+    for i in range(1,N):
+        for j in range(N-i):
+            if i==1:
+                value[j][j+i] = num[j][0]*num[j][1]*num[j+i][1]
+                continue
+            value[j][j+i] = 2**32
+
+            for k in range(j,j+i):
+                value[j][j+i]=min(value[j][j+i], value[j][k]+value[k+1][j+i] + num[j][0]*num[k][1]*num[j+i][1])
+    
+    print(value[0][-1])
