@@ -10,7 +10,6 @@ ans=sum(disable)+1 #비용은 전체비용합 + 1
 answer = [[0 for _ in range(N)] for _ in range(ans)]
 #answer[j][i]는 i번째 app의 j비용일때 최대 바이트수
 
-result=ans
 #각 인덱스마다 해당 비용의 최대 바이트 수를 저장한다.
 for i in range(N): #전체 인덱스 수
     for j in range(ans): # 전체 비용 수
@@ -20,8 +19,8 @@ for i in range(N): #전체 인덱스 수
             answer[j][i]= max(answer[j][i-1], answer[j-disable[i]][i-1]+activate[i])
         else: #비용이 더 크면 들어갈수 없으므로 이전 바이트 값을 넣는다.
              answer[j][i]=answer[j][i-1]
-				# 답을 구하는 다른 방식
-        if answer[j][i]>=M:
-            result=min(result,j)
 
-print(result)
+for i in range(len(answer)):
+    if M <= max(answer[i]): #비용 순으로 순회하여 해당 비용에 원하는 값을 얻었으면 해당 비용 출력
+        print(i)
+        break
