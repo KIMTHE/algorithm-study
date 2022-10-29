@@ -1,61 +1,17 @@
-from itertools import permutations
+from bisect import bisect_left
 
-def find(dist,weak):
-    global answer
+array = [5, 2, 1, 4, 3, 5,6,7,4,5,6]
+dp = [1]
+x = [array[0]]
 
-
-    for i in range(len(weak)//2):       
-            for friends in permutations(dist):
-                
-                count=1
-                position=weak[i]
-                
-                for j in friends:
-                    position+=j
-
-                    if position < weak[i+len(weak)//2-1]:
-                        count+=1
-                        
-                        for k in range(i+1,i+len(weak)//2):
-                            if weak[k] > position:
-                                position=weak[k]
-                                break
-                    else:
-                        answer=min(answer,count)
-                        break
-    return answer
-
-            
-def solution(n, weak, dist):
-    global answer
-    answer = 1000
-    dist.sort(reverse=True)
-
-    for i in range(len(weak)):
-        weak.append(weak[i]+n)
- 
-
-    find(dist,weak)
-                
-    if answer==1000:
-        return -1
+for i in range(1, len(array)):
+    if array[i] > x[-1]: # 현재 값이 x 배열의 마지막 값보다 클 경우
+        x.append(array[i]) # x 배열에 현재 값을 추가해 주고
+        dp.append(dp[-1] + 1) # 증가 부분 수열의 길이를 1 증가시킨다.
+    else: # 그렇지 않을 경우
+        idx = bisect_left(x, array[i]) # 현재 값이 x 배열의 몇 번째 인덱스에 들어갈 수 있는지를 찾아서
+        x[idx] = array[i] # x 배열의 idx 위치에 현재 값을 넣어준다.
     
-    return answer
 
-n=12
-weak=[1,5,6,10]
-dist=[1,2,3,4]
-
-# n = 30
-# weak = [0, 3,11,21]
-# dist = [10,4]
-
-# n= 12
-# weak= [1, 3, 4, 9, 10]
-# dist= [3, 5, 7]
-
-n = 200
-weak = [0, 10, 50, 80, 120, 160]
-dist = [1, 10, 5, 40, 30]
-
-print(solution(n,weak,dist))
+    #print(dp)
+    print(x)
