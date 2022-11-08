@@ -1,17 +1,50 @@
-from bisect import bisect_left
+def solution(n, k, cmd):
+    answer = ''
 
-array = [5, 2, 1, 4, 3, 5,6,7,4,5,6]
-dp = [1]
-x = [array[0]]
+    linked_list = {i: [i - 1, i + 1] for i in range(1, n+1)} #n=8일때 1~8까지
+    OX = ["O" for i in range(1,n+1)]
+    stack = []
 
-for i in range(1, len(array)):
-    if array[i] > x[-1]: # 현재 값이 x 배열의 마지막 값보다 클 경우
-        x.append(array[i]) # x 배열에 현재 값을 추가해 주고
-        dp.append(dp[-1] + 1) # 증가 부분 수열의 길이를 1 증가시킨다.
-    else: # 그렇지 않을 경우
-        idx = bisect_left(x, array[i]) # 현재 값이 x 배열의 몇 번째 인덱스에 들어갈 수 있는지를 찾아서
-        x[idx] = array[i] # x 배열의 idx 위치에 현재 값을 넣어준다.
-    
+    k += 1
 
-    #print(dp)
-    print(x)
+    for c in cmd:
+        if c[0] == 'D':
+            for _ in range(int(c[2:])):
+                k = linked_list[k][1]
+        elif c[0] == 'U':
+            for _ in range(int(c[2:])):
+                k = linked_list[k][0]
+        elif c[0] == 'C':
+            prev, next = linked_list[k]
+            stack.append([prev, next, k])
+            OX[k-1] = "X"
+
+            if next == n+1:
+                k = linked_list[k][0]
+            else:
+                k = linked_list[k][1]
+
+            if prev == 0:
+                linked_list[next][0] = prev
+            elif next == n+1:
+                linked_list[prev][1] = next
+            else:
+                linked_list[prev][1] = next
+                linked_list[next][0] = prev
+
+        elif c[0] == 'Z':
+            prev, next, now = stack.pop()
+            OX[now-1] = "O"
+
+            if prev == 0:
+                linked_list[next][0] = now
+            elif next == n+1:
+                linked_list[prev][1] = now
+            else:
+                linked_list[prev][1] = now
+                linked_list[next][0] = now
+
+        print(linked_list)
+    return "".join(OX)
+
+solution(8,2,["D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z"])
