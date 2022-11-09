@@ -1,50 +1,47 @@
-def solution(n, k, cmd):
-    answer = ''
+from collections import deque
 
-    linked_list = {i: [i - 1, i + 1] for i in range(1, n+1)} #n=8일때 1~8까지
-    OX = ["O" for i in range(1,n+1)]
-    stack = []
+def solution(board):
+    answer = 0
+    n=len(board)
+    visit=[[1000000 for _ in range(n)] for _ in range(n)] #0이 상하, 1이 좌우
+    
+    q=deque()
+    q.append([0,0,1,0]) 
+    visit[0][0]=0
+    
+    dir=[[0,1],[0,-1],[1,0],[-1,0]]
+    while q:
+        x,y,t_value,p=q.popleft() #t는 타입 1은 상하, 2는 좌우
+        for a,b in dir:
+            xa=x+a
+            yb=y+b
+            
+            if 0<=xa<n and 0<=yb<n and board[xa][yb]==0:
+                if t_value==0 or (t_value==1 and b==0) or (t_value==2 and a==0) : #직선, t==0일 경우는 첫 시작으로 전부다 직선     
+                    
+                    if visit[xa][yb]>=p+100:
+                        if t_value==0 and b==0:
+                            t=1
+                        elif t_value==0 and a==0:
+                            t=2
+                        else:
+                            t=t_value
+                        q.append([xa,yb,t,p+100])
+                        visit[xa][yb]=p+100
+                        
+                elif (t_value==1 and a==0) or (t_value==2 and b==0): #코너
+                    if visit[xa][yb]>=p+600:
+                        if t_value==1:
+                            t=2
+                        else:
+                            t=1
+                        q.append([xa,yb,t,p+600])
+                        visit[xa][yb]=p+600
+    
 
-    k += 1
+                        
+    answer=visit[-1][-1]
+    #answer=min(visit[0][-1][-1],visit[1][-1][-1])
+    return answer
 
-    for c in cmd:
-        if c[0] == 'D':
-            for _ in range(int(c[2:])):
-                k = linked_list[k][1]
-        elif c[0] == 'U':
-            for _ in range(int(c[2:])):
-                k = linked_list[k][0]
-        elif c[0] == 'C':
-            prev, next = linked_list[k]
-            stack.append([prev, next, k])
-            OX[k-1] = "X"
-
-            if next == n+1:
-                k = linked_list[k][0]
-            else:
-                k = linked_list[k][1]
-
-            if prev == 0:
-                linked_list[next][0] = prev
-            elif next == n+1:
-                linked_list[prev][1] = next
-            else:
-                linked_list[prev][1] = next
-                linked_list[next][0] = prev
-
-        elif c[0] == 'Z':
-            prev, next, now = stack.pop()
-            OX[now-1] = "O"
-
-            if prev == 0:
-                linked_list[next][0] = now
-            elif next == n+1:
-                linked_list[prev][1] = now
-            else:
-                linked_list[prev][1] = now
-                linked_list[next][0] = now
-
-        print(linked_list)
-    return "".join(OX)
-
-solution(8,2,["D 2", "C", "U 3", "C", "D 4", "C", "U 2", "Z", "Z"])
+solution([[0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0], [1, 0, 0, 0, 1], [0, 1, 1, 0, 0]])
