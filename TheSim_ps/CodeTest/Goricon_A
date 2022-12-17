@@ -1,0 +1,19 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+N=int(input())
+
+for _ in range(N):
+    M=int(input())
+    d=[]
+    for i in range(M):
+         a,b,c=map(int,input().split())
+         d.append([a,b,c])
+    
+    K,D,A=map(int,input().split())
+    answer=0
+    for i in d:
+        if i[0]*K+i[2]*A-i[1]*D>=0:
+            answer+=i[0]*K+i[2]*A-i[1]*D
+    
+    print(answer)

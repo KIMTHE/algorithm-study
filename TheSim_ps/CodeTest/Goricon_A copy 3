@@ -1,0 +1,71 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+import math
+
+N,K,R,Q = map(int,input().split())
+
+t=[[0,0,0] for _ in range(N+1)]
+
+x_value=0
+y_value=0
+idx=0
+for j in range(K):
+    i,x,y=map(int,input().split())
+    if j==0:
+        idx=i
+
+    if x-x_value!=0: #x축으로 움직임
+        type=0
+    else:
+        type=1
+
+    x_value=x
+    y_value=y
+
+    t[i][0]=x
+    t[i][1]=y
+    t[i][2]=type
+
+for i in range(idx+1,len(t)):
+    
+    if t[i][0]==0 and t[i][1]==0: #값 넣어주기
+        t[i][2]=t[i-1][2]
+        if t[i][2]==1: #
+            t[i][0]=t[i-1][0]+1
+            t[i][1]=t[i-1][1]
+            
+        elif t[i][2]==0:
+            t[i][0]=t[i-1][0]
+            t[i][1]=t[i-1][1]+1
+            
+    else:
+        continue
+
+for _ in range(Q):
+    j,x,y=map(int,input().split())
+
+
+    a = x-t[j][0]
+    b = y-t[j][1]
+    c = math.sqrt((a * a) + (b * b))
+    print(a,b)
+    if c<R: #태풍 범위일 경우
+        if t[j][2]==1: #y축일 경우 왼쪽 안전, 오른쪽 위험
+            if b<0:
+                print("unsafe")
+            elif b>0:
+                print("safe")
+            elif b==0:
+                print("gori")
+
+        else: #x축일경우 위 안전, 오른쪽 위험
+            if a<0:
+                print("unsafe")
+            elif a>0:
+                print("safe")
+            elif a==0:
+                print("gori")
+    else:
+        print("gori")
+
+    

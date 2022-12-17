@@ -1,0 +1,26 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+N,M,q=map(int,input().split())
+
+m=[]
+for i in range(N):
+    m.append(list(map(int,input().split())))
+
+
+v=[i for i in range(N)]
+for i in range(q):
+    value=input().split()
+
+    i=int(value[1])
+    j=int(value[2])
+    if int(value[0])==0:
+        i=v[int(value[1])]
+        k=int(value[3])
+        m[i][j]=k
+
+    elif int(value[0])==1:
+        v[i],v[j]=v[j],v[i]
+
+for i in v:
+    print(*m[i])

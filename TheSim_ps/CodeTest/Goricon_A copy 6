@@ -1,0 +1,15 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+N,M,K=map(int,input().split())
+
+m=[]
+for _ in range(N):
+    m.append(list(map(int,input().split())))
+
+p=[]
+for _ in range(5):
+    m.append(list(map(int,input().split())))
+
+dir=[[0,1],[0,-1],[1,0],[-1,0]]
+
