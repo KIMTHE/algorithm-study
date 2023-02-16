@@ -1,61 +1,47 @@
-from itertools import permutations
+from collections import deque
 
-def find(dist,weak):
-    global answer
-
-
-    for i in range(len(weak)//2):       
-            for friends in permutations(dist):
-                
-                count=1
-                position=weak[i]
-                
-                for j in friends:
-                    position+=j
-
-                    if position < weak[i+len(weak)//2-1]:
-                        count+=1
-                        
-                        for k in range(i+1,i+len(weak)//2):
-                            if weak[k] > position:
-                                position=weak[k]
-                                break
-                    else:
-                        answer=min(answer,count)
-                        break
-    return answer
-
-            
-def solution(n, weak, dist):
-    global answer
-    answer = 1000
-    dist.sort(reverse=True)
-
-    for i in range(len(weak)):
-        weak.append(weak[i]+n)
- 
-
-    find(dist,weak)
-                
-    if answer==1000:
-        return -1
+def solution(board):
+    answer = 0
+    n=len(board)
+    visit=[[1000000 for _ in range(n)] for _ in range(n)] #0이 상하, 1이 좌우
     
+    q=deque()
+    q.append([0,0,1,0]) 
+    visit[0][0]=0
+    
+    dir=[[0,1],[0,-1],[1,0],[-1,0]]
+    while q:
+        x,y,t_value,p=q.popleft() #t는 타입 1은 상하, 2는 좌우
+
+        if x==n-1 and y==n-1:
+            continue
+
+        for a,b in dir:
+            xa=x+a
+            yb=y+b
+            
+            if 0<=xa<n and 0<=yb<n and board[xa][yb]==0:
+                if t_value==0 or (t_value==1 and b==0) or (t_value==2 and a==0) : #직선, t==0일 경우는 첫 시작으로 전부다 직선     
+                        if t_value==0 and b==0:
+                            t=1
+                        elif t_value==0 and a==0:
+                            t=2
+                        else:
+                            t=t_value
+                        np=p+100
+                        
+                elif (t_value==1 and a==0) or (t_value==2 and b==0): #코너
+                        if t_value==1:
+                            t=2
+                        else:
+                            t=1
+                        np=p+600
+                
+                if np<=visit[xa][yb]:
+                    visit[xa][yb]=np
+                    q.append([xa,yb,t,np])
+    
+    print(visit)
     return answer
 
-n=12
-weak=[1,5,6,10]
-dist=[1,2,3,4]
-
-# n = 30
-# weak = [0, 3,11,21]
-# dist = [10,4]
-
-# n= 12
-# weak= [1, 3, 4, 9, 10]
-# dist= [3, 5, 7]
-
-n = 200
-weak = [0, 10, 50, 80, 120, 160]
-dist = [1, 10, 5, 40, 30]
-
-print(solution(n,weak,dist))
+solution([[0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0], [1, 0, 0, 0, 1], [0, 1, 1, 0, 0]])

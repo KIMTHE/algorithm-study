@@ -7,19 +7,26 @@ B=input()
 A=list(A)
 B=list(B)
 
-output=[[0]*(len(A)+1)for i in range(len(B)+1)]
+dp=[["" for _ in range(len(B)+1)] for _ in range(len(A)+1)]
 
-
-for i in range(len(A)):
-    for j in range(len(B)):
-        if A[i]==B[j]:
-            output[j+1][i+1]=output[j][i]+1
+for i in range(1,len(A)+1):
+    for j in range(1,len(B)+1):
+        if A[i-1]==B[j-1]:
+            dp[i][j]=dp[i-1][j-1]+B[j-1]
         else:
-            output[j+1][i+1]=max(output[j][i+1],output[j+1][i])
+            if len(dp[i-1][j])>len(dp[i][j-1]):
+                dp[i][j]=dp[i-1][j]
+            else:
+                dp[i][j]=dp[i][j-1]
+            
 
-print(output[-1][-1])
+print(len(dp[-1][-1]))
 
-#for i in range(len(A)+1):
- #   for j in range(len(B)+1):
-  #     print(output[j][i],end=' ')
-   # print()
+# for i in range(1,len(A)+1):
+#     for j in range(1,len(B)+1):
+#         if A[i-1]==B[j-1]:
+#             dp[i][j]=dp[i-1][j-1]+1
+#         else:
+#             dp[i][j]=max(dp[i-1][j],dp[i][j-1])
+        
+# print(dp[-1][-1])

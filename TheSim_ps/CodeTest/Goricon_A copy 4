@@ -1,0 +1,39 @@
+import sys
+input = lambda : sys.stdin.readline().rstrip()
+
+B=int(input())
+
+b_l=[]
+b_h=[]
+for i in range(B*2):
+    a=input()
+
+    if i<B:
+        b_l.append(a)
+    else:
+        b_h.append(a)
+
+N=int(input())
+for _ in range(N):
+    data=list(input())
+    l=0
+    h=0
+
+    for j in range(len(b_l)):
+        low=list(b_l[j])
+        high=list(b_h[j])
+
+        for i in range(len(data)):
+            if data[i]==low[0] and len(data)-i>=len(low):
+                if data[i:i+len(low)]==low:
+                    l+=1
+            if data[i]==high[0] and len(data)-i>=len(high):
+                if data[i:i+len(high)]==high:
+                    h+=1
+    t=h-l
+    if t==0:
+        print("GOOD")
+    elif t>0:
+        print("LOW "+str(abs(t)))
+    else:
+        print("HIGH "+str(abs(t)))
